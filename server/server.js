@@ -10,12 +10,14 @@ const publicPath = path.join(__dirname,'../public');
 var app = express();
 var server = http.createServer(app);
 var io = socketIO(server);
+var cnt = 1;
 app.use(express.static(publicPath));
 
 io.on('connection', (socket) =>{
   console.log('New User Connected');
+  cnt++;
 
-  socket.emit('newMessage', generateMessage('Admin', 'Welcome to chat app'));
+  socket.emit('newMessage', generateMessage('Admin', 'Welcome to chat app', 'USER' + cnt));
   socket.broadcast.emit('newMessage', generateMessage('Admin', 'New User Joined'));
 
   socket.on('createMessage', (message, callback) => {

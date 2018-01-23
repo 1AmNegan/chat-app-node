@@ -1,10 +1,12 @@
 socket = io();
+var username;
 socket.on('connect', function () {
   console.log('Connected to server');
 
 });
 
 socket.on('newMessage', function (message) {
+  if (message.username) username = message.username;
   var li = $('<li></li>');
   li.text(`${message.from}: ${message.text}`);
   $('#messages').append(li);
@@ -28,7 +30,7 @@ var messageBox = $('[name=message]');
 $('#message-form').on('submit', function(e) {
   e.preventDefault();
   socket.emit('createMessage', {
-    from: 'User',
+    from: username,
     text: messageBox.val()
   }, function() {
     messageBox.val('');

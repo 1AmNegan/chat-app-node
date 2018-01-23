@@ -1,7 +1,8 @@
-const generateMessage = (from, text) => {
+const generateMessage = (from, text, username) => {
   return {
     from,
     text,
+    username,
     createdAt: new Date().getTime()
   };
 };
